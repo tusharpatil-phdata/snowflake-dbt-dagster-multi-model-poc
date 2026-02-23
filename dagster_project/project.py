@@ -1,13 +1,13 @@
-from pathlib import Path
+import os
 from dagster_dbt import DbtProject
 
-# Point to the dbt project directory relative to this file
+# Use DBT_PROJECT_DIR env var, defaulting to ./dbt_project at the working directory root
+DBT_PROJECT_DIR = os.getenv("DBT_PROJECT_DIR", "./dbt_project")
+
 dbt_project = DbtProject(
-    project_dir=Path(__file__).joinpath("..", "dbt_project").resolve(),
+    project_dir=DBT_PROJECT_DIR,
 )
 
-# Prepare the dbt project when running in dev environments
 dbt_project.prepare_if_dev()
 
 
-# This tells dagster-dbt where your dbt project is (../dbt_project), so it can load the manifest and run dbt.
