@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "snowflake_dbt_dagster_multi_model_poc"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+  "dagster",
+  "dagster-dbt",
+  "dagster-snowflake",
+  "dagster-cloud",
+  "dbt-snowflake",
+]
