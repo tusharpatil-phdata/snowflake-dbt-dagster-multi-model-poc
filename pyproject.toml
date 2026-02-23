@@ -13,3 +13,7 @@ dependencies = [
   "dagster-cloud",
   "dbt-snowflake",
 ]
+
+[tool.setuptools]
+# Explicitly declare only the Dagster package
+packages = ["dagster_project"]
