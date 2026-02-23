@@ -1,4 +1,4 @@
 locations:
-  tpch-poc:
+  - location_name: tpch-poc
     code_source:
       package_name: dagster_project
