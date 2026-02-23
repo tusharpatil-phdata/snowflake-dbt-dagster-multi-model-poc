@@ -11,7 +11,8 @@ models:
       - name: market_segment
         tests:
           - accepted_values:
-              values: ['AUTOMOBILE', 'BUILDING', 'FURNITURE', 'MACHINERY', 'HOUSEHOLD']
+              arguments:
+                values: ['AUTOMOBILE', 'BUILDING', 'FURNITURE', 'MACHINERY', 'HOUSEHOLD']
 
   - name: stg_tpch_orders
     description: "Staging table for TPCH orders"
