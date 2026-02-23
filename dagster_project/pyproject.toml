@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tpch_dagster_project"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+  "dagster",
+  "dagster-dbt",
+  "dagster-snowflake",
+  "dbt-snowflake",
+]
