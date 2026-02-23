@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: int_customer_orders
+    description: "Intermediate model for customers joined with their orders"
+    columns:
+      - name: order_key
+        tests:
+          - not_null
+      - name: order_size_category
+        tests:
+          - accepted_values:
+              values: ['Small', 'Medium', 'Large', 'Enterprise']
+
+  - name: int_order_details
+    description: "Intermediate model for order-level line item details"
+    columns:
+      - name: order_key
+        tests:
+          - not_null
+      - name: net_price
+        tests:
+          - not_null
+      - name: total_price_with_tax
+        tests:
+          - not_null
