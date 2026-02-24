@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: stg_tpch_customers
+    description: "Staging table for TPCH customers"
+    columns:
+      - name: customer_key
+        tests:
+          - unique
+          - not_null
+      - name: market_segment
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['AUTOMOBILE', 'BUILDING', 'FURNITURE', 'MACHINERY', 'HOUSEHOLD']
+
+  - name: stg_tpch_orders
+    description: "Staging table for TPCH orders"
+    columns:
+      - name: order_key
+        tests:
+          - unique
+          - not_null
+      - name: customer_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpch_customers')
+              field: customer_key
+
+  - name: stg_tpch_lineitems
+    description: "Staging table for TPCH lineitems"
+    columns:
+      - name: order_key
+        tests:
+          - not_null
+
+  - name: stg_tpch_parts
+    description: "Staging table for TPCH parts"
+    columns:
+      - name: part_key
+        tests:
+          - unique
+          - not_null
