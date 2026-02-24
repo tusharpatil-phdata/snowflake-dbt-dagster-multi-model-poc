@@ -17,12 +17,13 @@ clean-targets:
 
 models:
   snowflake_dbt_dagster_poc:
+    +materialized: table
+
     staging:
-      +schema: staging
-      +materialized: table
+      +tags: ["staging"]
+
     intermediate:
-      +schema: intermediate
-      +materialized: table
+      +tags: ["intermediate"]
+
     marts:
-      +schema: mart
-      +materialized: table
+      +tags: ["mart"]
