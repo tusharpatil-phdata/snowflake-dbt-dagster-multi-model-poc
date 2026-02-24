@@ -24,8 +24,9 @@ daily_sales AS (
         SUM(net_price)                  AS total_revenue,
         SUM(extended_price * discount)  AS total_discounts,
         AVG(net_price)                  AS avg_order_line_value,
-        -- Load timestamp in IST
-        CONVERT_TIMEZONE('UTC', 'Asia/Kolkata', CURRENT_TIMESTAMP())::timestamp_tz AS loaded_at
+        
+        -- Load timestamp approximating IST (UTC + 5h30m)
+        DATEADD('minute', 330, CURRENT_TIMESTAMP())::timestamp_ntz AS loaded_at
     FROM order_details
     GROUP BY order_date
 )
