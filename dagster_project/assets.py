@@ -4,27 +4,23 @@ from dagster_dbt import DbtCliResource
 from .partitions import daily_orders
 
 @asset
-def dbt_project_build(
-    context: AssetExecutionContext,
-    dbt: DbtCliResource,
-):
+def dbt_project_build(dbt: DbtCliResource) -> None:
     """
     Run `dbt build` for the entire dbt project.
 
     This shows Dagster orchestrating the full dbt DAG:
     staging -> intermediate -> marts.
     """
-    context.log.info("Running full dbt build for project")
-    # Important: do NOT pass context into dbt.cli() here
-    yield from dbt.cli(["build"]).stream()
+    # Run dbt build and wait for completion.
+    # Do NOT pass Dagster context here, and do NOT yield anything.
+    dbt.cli(["build"], raise_on_error=True).wait()
+    # Function ends here -> returns None -> Dagster sees an output
 
-@asset(
-    partitions_def=daily_orders,
-)
+@asset(partitions_def=daily_orders)
 def mart_sales_summary_partitioned(
     context: AssetExecutionContext,
     dbt: DbtCliResource,
-):
+) -> None:
     """
     Daily-partitioned orchestration for mart_sales_summary (1993, IST-based).
 
@@ -47,7 +43,10 @@ def mart_sales_summary_partitioned(
 
     vars_arg = f'{{min_date: "{min_date}", max_date: "{max_date}"}}'
 
-    # Important: do NOT pass context into dbt.cli() here either
-    yield from dbt.cli(
-        ["build", "--select", "mart_sales_summary", "--vars", vars_arg]
-    ).stream()
+    # Run only the mart for this window.
+    # Again, do NOT pass Dagster context and do NOT yield.
+    dbt.cli(
+        ["build", "--select", "mart_sales_summary", "--vars", vars_arg],
+        raise_on_error=True,
+    ).wait()
+    # Function ends here -> returns None -> Dagster sees an output
