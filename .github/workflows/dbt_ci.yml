@@ -20,7 +20,7 @@ jobs:
       SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
       SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
       SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-      SNOWFLAKE_DEV_SCHEMA: ${{ secrets.SNOWFLAKE_DEV_SCHEMA }}
+      SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_DEV_SCHEMA }}
 
     steps:
       - name: Checkout code
