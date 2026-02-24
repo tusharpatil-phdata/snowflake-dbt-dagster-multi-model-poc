@@ -15,7 +15,8 @@ def dbt_project_build(
     staging -> intermediate -> marts.
     """
     context.log.info("Running full dbt build for project")
-    yield from dbt.cli(["build"], context=context).stream()
+    # Important: do NOT pass context into dbt.cli() here
+    yield from dbt.cli(["build"]).stream()
 
 @asset(
     partitions_def=daily_orders,
@@ -46,7 +47,7 @@ def mart_sales_summary_partitioned(
 
     vars_arg = f'{{min_date: "{min_date}", max_date: "{max_date}"}}'
 
+    # Important: do NOT pass context into dbt.cli() here either
     yield from dbt.cli(
-        ["build", "--select", "mart_sales_summary", "--vars", vars_arg],
-        context=context,
+        ["build", "--select", "mart_sales_summary", "--vars", vars_arg]
     ).stream()
