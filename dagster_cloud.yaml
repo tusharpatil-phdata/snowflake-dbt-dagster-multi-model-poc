@@ -1,4 +1,4 @@
 locations:
   - location_name: tpch-poc
     code_source:
-      autoload_defs_module_name: dagster_project.definitions
+      package_name: dagster_project
